@@ -6,7 +6,7 @@ var onSocketConnection = require('./socket-events');
 var app = express();
 
 app.get('/', function (req, res) {
-  res.sendfile(__dirname + './index.html');
+  res.sendfile(__dirname + '/index.html');
 });
 
 var server = http.createServer(app).listen(8080);
