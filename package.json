@@ -1,0 +1,23 @@
+{
+  "name": "sio",
+  "version": "0.0.0",
+  "description": "socket.io",
+  "main": "server.js",
+  "scripts": {
+    "test": "exit 0;"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexKVal/sio.git"
+  },
+  "author": "alexkval",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AlexKVal/sio/issues"
+  },
+  "homepage": "https://github.com/AlexKVal/sio#readme",
+  "dependencies": {
+    "express": "^4.13.3",
+    "socket.io": "^1.3.6"
+  }
+}
