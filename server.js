@@ -1,6 +1,6 @@
 var http = require('http');
 var express = require('express');
-var io = require('socket.io');
+var socketio = require('socket.io');
 var onSocketConnection = require('./socket-events');
 
 var app = express();
@@ -11,7 +11,7 @@ app.get('/', function (req, res) {
 
 var server = http.createServer(app).listen(8080);
 
-io.listen(server);
+var io = socketio.listen(server);
 io.set('log level', 3);
 
 io.sockets.on('connection', onSocketConnection);
