@@ -1,23 +1,26 @@
 var usernames = {};
 
-module.exports = function onSocketConnection(socket) {
-  function onAddUser(username) {
-    socket.username = username;
-    usernames[username] = username;
-    socket.emit('updateChat', 'Server', 'you have connected');
-  }
+module.exports = function socketEvents(io) {
+  return function onSocketConnection(socket) {
+    socket.on('adduser', onAddUser);
+    socket.on('sendchat', onSendChat);
+    socket.on('disconnect', onSocketDisconnect);
 
-  function onSendChat(message) {
-    io.sockets.emit('updateChat', socket.username, message);
-  }
+    function onAddUser(username) {
+      socket.username = username;
+      usernames[username] = username;
+      socket.emit('updatechat', username, 'is connected.');
+      io.sockets.emit('updateusers', usernames);
+    }
 
-  function onSocketDisconnect() {
-    delete usernames[socket.username];
-    io.sockets.emit('updateUsers', usernames);
-    socket.broadcast.emit('updateChat', 'Server', socket.username + ' has disconnected.');
-  }
+    function onSendChat(message) {
+      io.sockets.emit('updatechat', socket.username, message);
+    }
 
-  socket.on('addUser', onAddUser);
-  socket.on('sendChat', onSendChat);
-  socket.on('disconnect', onSocketDisconnect);
+    function onSocketDisconnect() {
+      delete usernames[socket.username];
+      io.sockets.emit('updateusers', usernames);
+      socket.broadcast.emit('updatechat', 'Server', socket.username + ' has disconnected.');
+    }
+  }
 }
